@@ -43,14 +43,10 @@ apply(plugin: "osgi");
 apply(plugin: "idea");
 apply(plugin: "eclipse");
 
-group = "com.github.fge";
+group = "com.box";
 version = "2.2.7";
 sourceCompatibility = "1.6";
 targetCompatibility = "1.6"; // defaults to sourceCompatibility
-
-project.ext {
-    description = "A Java implementation of the JSON Schema specification";
-};
 
 /*
  * Repositories to use
@@ -63,7 +59,7 @@ repositories {
  * List of dependencies
  */
 dependencies {
-    compile(group: "com.github.fge", name: "json-schema-core",
+    compile(group: "com.box", name: "json-schema-core",
         version: "1.2.6");
     compile(group: "javax.mail", name: "mailapi", version: "1.4.3");
     compile(group: "joda-time", name: "joda-time", version: "2.3");
@@ -180,9 +176,9 @@ task pom << {
  */
 
 project.ext {
-    gitrwscm = sprintf("git@github.com:fge/%s", name);
-    gitroscm = sprintf("https://github.com/fge/%s.git", name);
-    projectURL = sprintf("https://github.com/fge/%s", name);
+    description = "A Java implementation of the JSON Schema specification";
+    scmUrl = sprintf("git@github.com:box-metadata/%s", name);
+    projectURL = sprintf("https://github.com/box-metadata/%s", name);
     sonatypeStaging = "https://oss.sonatype.org/service/local/staging/deploy/maven2/";
     sonatypeSnapshots = "https://oss.sonatype.org/content/repositories/snapshots/";
 };
@@ -234,15 +230,15 @@ uploadArchives {
     uploadArchives.repositories.mavenDeployer
 ]*.pom*.whenConfigured { pom ->
     pom.project {
-        name "${name}";
+        name "${project.name}";
         packaging "jar";
-        description "${description}";
+        description "${project.ext.description}";
         url "${projectURL}";
 
         scm {
-            url "${gitrwscm}";
-            connection "${gitrwscm}";
-            developerConnection "${gitroscm}";
+            url "${scmUrl}";
+            connection "scm:git:${scmUrl}";
+            developerConnection "scm:git:${scmUrl}";
         }
 
         licenses {
@@ -260,9 +256,9 @@ uploadArchives {
 
         developers {
             developer {
-                id "fge";
-                name "Francis Galiegue";
-                email "fgaliegue@gmail.com";
+                id "metadata-dev";
+                name "Metadata Developer";
+                email "metadata-dev@box.com";
             }
         }
     }
